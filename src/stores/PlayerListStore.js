@@ -17,9 +17,12 @@ function select (player, name) {
     if (player !== playerKey) {
       playerState.ignore.push(name);
     } else {
+      // remove old player from current selected dropdowns first
+      _unselect(playerState.selected)
       // select the current player for this dropdown
       playerState.selected = name;
     }
+
   });
 }
 
@@ -33,6 +36,14 @@ function register (player) {
 function unregister (player) {
   delete state[player];
 }
+
+function _unselect (name) {
+  Object.keys(state).forEach(playerKey => {
+    let playerState = state[playerKey];
+    playerState.ignore = playerState.ignore.filter(playerName => playerName !== name);
+  });
+}
+
 
 let PlayerListStore = assign({}, EventEmitter.prototype, {
 
