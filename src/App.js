@@ -8,13 +8,13 @@ export default class App extends Component {
     return (
       <div className="ui">
 
-        <Team name="Team A" />
-        <Score for="Team A" />
+        <Team name="Team-A" />
+        <Score for="Team-A" />
 
         <Table />
 
-        <Team name="Team B" />
-        <Score for="Team B" />
+        <Team name="Team-B" />
+        <Score for="Team-B" />
 
       </div>
     );

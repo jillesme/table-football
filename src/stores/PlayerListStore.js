@@ -5,23 +5,42 @@ import assign from 'object-assign';
 
 const CHANGE_EVENT = 'change';
 
-let active = [];
-let options = CONSTANTS.PLAYERS;
+// Turn into { player1: {}, player2: .. }
+let state = {};
 
-function select (name) {
-  console.log('selecting name: ', name);
-  active.push(name);
+function select (player, name) {
+  // loop over each registered player
+  Object.keys(state).forEach(playerKey => {
+    let playerState = state[playerKey];
+
+    // ignore the player on other dropdowns
+    if (player !== playerKey) {
+      playerState.ignore.push(name);
+    } else {
+      // select the current player for this dropdown
+      playerState.selected = name;
+    }
+  });
 }
 
-function deselect (name) {
-  console.log('deselectiing name: ', name);
-  active = active.filter(player => player.name !== name);
+function register (player) {
+  state[player] = {
+    selected: '',
+    ignore: []
+  };
+}
+
+function unregister (player) {
+  delete state[player];
 }
 
 let PlayerListStore = assign({}, EventEmitter.prototype, {
 
-  getPlayers: function () {
-    return options.filter(player => active.indexOf(player.name) < 0);
+  getStateForPlayer: function (player) {
+    return {
+      selected: state[player].selected,
+      options: CONSTANTS.PLAYERS.filter(playerObj => state[player].ignore.indexOf(playerObj.name) === -1)
+    }
   },
 
   emitChange: function() {
@@ -42,12 +61,17 @@ Dispatcher.register(function (action) {
   switch(action.actionType) {
 
     case 'SELECT':
-      select(action.name);
+      select(action.player, action.name);
       PlayerListStore.emitChange();
       break;
 
-    case 'DESELECT':
-      deselect(action.name);
+    case 'REGISTER':
+      register(action.player);
+      PlayerListStore.emitChange();
+      break;
+
+    case 'UNREGISTER':
+      register(action.player);
       PlayerListStore.emitChange();
       break;
 
