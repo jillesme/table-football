@@ -7,7 +7,7 @@ export default class Team extends Component {
   }
   render() {
     return (
-      <div className="team">
+      <div className="team center">
         <PlayerDropdown team={this.props.name} name="player-1" />
         <PlayerDropdown team={this.props.name} name="player-2" />
       </div>
