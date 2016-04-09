@@ -7,9 +7,7 @@ export default class Score extends Component {
   render() {
     return (
       <div className="score">
-
-      <input type="number" defaultValue="0" min="0" max="10" />
-
+        <input type="number" defaultValue="0" min="0" max="10" />
       </div>
     );
   }

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import Team from './Team.js';
-import Score from './Score.js';
-import Table from './Table.js';
+import Team from './components/Team.js';
+import Score from './components/Score.js';
+import Table from './components/Table.js';
 
 export default class App extends Component {
   render() {

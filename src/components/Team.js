@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import PlayerSelector from './PlayerSelector.js';
+import PlayerDropdown from './PlayerDropdown.js';
 
 export default class Team extends Component {
   constructor (props) {
@@ -8,10 +8,8 @@ export default class Team extends Component {
   render() {
     return (
       <div className="team">
-
-        <PlayerSelector team={this.props.name} name="player-1" />
-        <PlayerSelector team={this.props.name} name="player-2" />
-
+        <PlayerDropdown team={this.props.name} name="player-1" />
+        <PlayerDropdown team={this.props.name} name="player-2" />
       </div>
     );
   }
